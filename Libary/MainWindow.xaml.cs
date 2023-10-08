@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Lidary.Model;
@@ -12,7 +13,6 @@ namespace Libary
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<Book> Books = new List<Book>();
 
         List<User> users = new List<User>()
             {
@@ -38,14 +38,15 @@ namespace Libary
             InitializeComponent();
 
             UserList.ItemsSource = users;
-            UserList.FontSize = 10;
 
             BookList.ItemsSource = books;
-            BookList.FontSize = 10;
+
+            SelectBook.ItemsSource = BookList.ItemsSource = books;
+            SelectUser.ItemsSource = UserList.ItemsSource = users;
 
 
-            BookSelector.ItemsSource = BookList.ItemsSource = books;
-            UserSelector.ItemsSource = UserList.ItemsSource = users;
+            SelectBook.ItemsSource = BookList.ItemsSource = books;
+            SelectUser.ItemsSource = UserList.ItemsSource = users;
 
         }
         private void AddSelectedBook(object sender, RoutedEventArgs e)
@@ -55,8 +56,8 @@ namespace Libary
 
         private void AddBookUser()
         {
-            User selectedUser = (User)UserSelector.SelectedItem;
-            Book selectedBook = (Book)BookSelector.SelectedItem;
+            User selectedUser = (User)SelectUser.SelectedItem;
+            Book selectedBook = (Book)SelectBook.SelectedItem;
             if (selectedUser != null && selectedBook != null)
             {
                 selectedUser.BorrowBook(selectedBook, selectedUser);
@@ -91,14 +92,6 @@ namespace Libary
             UserList.Items.Refresh();
         }
 
-        private void Find_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        { 
-        }
-
-        private void TextName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
-
         private void AddBook(object sender, RoutedEventArgs e)
         {
             Book value = new Book(books[^1].Act, TextBookName.Text, TextAuthor.Text, Convert.ToInt32(TextYear.Text), Convert.ToInt32(TextMounth.Text), Convert.ToInt32(TextDay.Text), Convert.ToInt32(TextCount.Text));
@@ -113,6 +106,33 @@ namespace Libary
 
             UserBook.ItemsSource = value.Books;
             UserBook.Items.Refresh();
+        }
+
+        private void Serch_in_Users(object sender, TextChangedEventArgs e)
+        {
+            if (SerchBox.Text == "")
+            {
+                UserList.ItemsSource = users;
+                UserList.Items.Refresh();
+            }
+            else
+            {
+                 var SerchUser = from u in users
+                                 where u.Name.ToLower().StartsWith(SerchBox.Text)
+                                 orderby u
+                                 select u;
+
+                UserList.ItemsSource = SerchUser;
+                UserList.Items.Refresh();
+            }
+        }
+
+        private void SelectUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            User? value = SelectUser.SelectedItem as User;
+
+            BookUserList.ItemsSource = value.Books;
+            BookUserList.Items.Refresh();
         }
     }
 }

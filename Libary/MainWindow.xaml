@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Libary"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="1100">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -19,74 +19,60 @@
         <TabControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
                     Grid.RowSpan="2" Background="AliceBlue" Margin="0,0,0,10">
             <TabItem Header="Users">
-                <StackPanel Margin="10, 10, 10, 10">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <DockPanel Grid.Row="0">
-                            <TextBlock>Юзеры</TextBlock>
-                            <Expander>
-                                <TextBox Name="Find" KeyDown="Find_KeyDown"/>
-                            </Expander>
-                        </DockPanel>
-                        <DockPanel Grid.Row="1">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <ScrollViewer Grid.Column="0">
-                                    <ListView Name="UserList" SelectionChanged="Select_User" >
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn Header="id" DisplayMemberBinding="{Binding Path=Id}"/>
-                                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
-                                                <GridViewColumn Header="Family" DisplayMemberBinding="{Binding Path=Family}"/>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                </ScrollViewer>
-                                <ScrollViewer Grid.Column="1">
-                                    <ListView Name="UserBook">
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn Header="Atc" DisplayMemberBinding="{Binding Path=Act}"/>
-                                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
-                                                <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Path=Author}"/>
-                                                <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Path=Time}"/>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                </ScrollViewer>
-                            </Grid>
-                        </DockPanel>
-                        <Expander Grid.Row="2" Header="Добавить Пользователя">
-                            <StackPanel VerticalAlignment="Bottom">
-                                <DockPanel>
-                                    <Label Content="Введите имя пользователя" Width="187"/>
-                                    <TextBox Name="TextName" TextChanged="TextName_TextChanged"/>
-                                </DockPanel>
-                                <DockPanel>
-                                    <Label Content="Введите Фамилию пользователя" Width="187"/>
-                                    <TextBox Name="TextFamily"/>
-                                </DockPanel>
-                                <Button Content="Добавить Пользователя" Click="AddUser"/>
-                            </StackPanel>
-                        </Expander>
-                    </Grid>
-                </StackPanel>
+                <DockPanel LastChildFill="True" Margin="10, 10, 10, 10">
+                    <DockPanel DockPanel.Dock="Top">
+                        <StackPanel>
+                            <TextBlock>Поиск пользователей</TextBlock>
+                            <TextBox Name="SerchBox" TextChanged="Serch_in_Users"/>
+                        </StackPanel>
+                    </DockPanel>                    
+                    <Expander DockPanel.Dock="Bottom" Header="Добавить Пользователя" Grid.ColumnSpan="2">
+                        <StackPanel VerticalAlignment="Bottom">
+                            <DockPanel>
+                                <Label Content="Введите имя пользователя" Width="200"/>
+                                <TextBox Name="TextName"/>
+                            </DockPanel>
+                            <DockPanel>
+                                <Label Content="Введите Фамилию пользователя" Width="200"/>
+                                <TextBox Name="TextFamily"/>
+                            </DockPanel>
+                            <Button Content="Добавить Пользователя" Click="AddUser"/>
+                        </StackPanel>
+                    </Expander>
+
+                    <ScrollViewer>
+                        <ListView Name="UserList" SelectionChanged="Select_User">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="id" DisplayMemberBinding="{Binding Path=Id}"/>
+                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                                    <GridViewColumn Header="Family" DisplayMemberBinding="{Binding Path=Family}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                    <ScrollViewer>
+                        <ListView Name="UserBook" MinWidth="400">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Atc" DisplayMemberBinding="{Binding Path=Act}"/>
+                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Path=Author}"/>
+                                    <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Path=Time}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </DockPanel>
             </TabItem>
             <TabItem Header="Books" Height="20" VerticalAlignment="Top">
-                <DockPanel>
+                <DockPanel LastChildFill="True" Margin="10, 10, 10, 10">
                     <TextBlock DockPanel.Dock="Top">Книги</TextBlock>
                     <Expander DockPanel.Dock="Bottom" Header="Добавить Книгу" Grid.ColumnSpan="3">
                         <StackPanel VerticalAlignment="Bottom">
                             <DockPanel>
                                 <Label Content="Введите Название книги" Width="187"/>
-                                <TextBox Name="TextBookName" TextChanged="TextName_TextChanged"/>
+                                <TextBox Name="TextBookName"/>
                             </DockPanel>
                             <DockPanel>
                                 <Label Content="Введите Автора" Width="187"/>
@@ -124,56 +110,54 @@
                             </ListView.View>
                         </ListView>
                     </ScrollViewer>
-                    
+
                 </DockPanel>
             </TabItem>
             <TabItem Header="Выданные книги">
-                <DockPanel LastChildFill="True">
+                <DockPanel LastChildFill="True" Margin="10, 10, 10, 10">
                     <TextBlock DockPanel.Dock="Top">Выданные книги</TextBlock>
                     <Button DockPanel.Dock="Bottom" Content="Выдать книгу" Click="AddSelectedBook"/>
-                    <ListView DockPanel.Dock="Left" Name="SelectBook" MaxHeight="200">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Act" DisplayMemberBinding="{Binding Act}"/>
-                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Author}"/>
-                                <GridViewColumn Header="Age" DisplayMemberBinding="{Binding age}"/>
-                                <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Time}"/>
-                                <GridViewColumn Header="User" DisplayMemberBinding="{Binding NowUser}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
 
-                    <ListView DockPanel.Dock="Right" Name="SelectUser" MaxHeight="200">
+                    <ScrollViewer DockPanel.Dock="Right">
+                        <ListView Name="SelectBook">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Act" DisplayMemberBinding="{Binding Act}"/>
+                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Author}"/>
+                                    <GridViewColumn Header="Age" DisplayMemberBinding="{Binding age}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+
+
+                    <ScrollViewer DockPanel.Dock="Left">
+                        <ListView Name="SelectUser" SelectionChanged="SelectUser_SelectionChanged">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Act" DisplayMemberBinding="{Binding Act}"/>
-                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Author}"/>
-                                <GridViewColumn Header="Age" DisplayMemberBinding="{Binding age}"/>
-                                <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Time}"/>
-                                <GridViewColumn Header="User" DisplayMemberBinding="{Binding NowUser}"/>
+                                <GridViewColumn Header="id" DisplayMemberBinding="{Binding Path=Id}"/>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                                <GridViewColumn Header="Family" DisplayMemberBinding="{Binding Path=Family}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <ListView Name="BookUserList" MaxHeight="200">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Act" DisplayMemberBinding="{Binding Act}"/>
-                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Author}"/>
-                                <GridViewColumn Header="Age" DisplayMemberBinding="{Binding age}"/>
-                                <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Time}"/>
-                                <GridViewColumn Header="User" DisplayMemberBinding="{Binding NowUser}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    
+                    </ScrollViewer>
                     
                     <ScrollViewer>
-                        <ComboBox Name="UserSelector" DisplayMemberPath="Name" SelectedValuePath="Id" />
+                        <ListView Name="BookUserList">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Act" DisplayMemberBinding="{Binding Act}"/>
+                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Author}"/>
+                                    <GridViewColumn Header="Age" DisplayMemberBinding="{Binding age}"/>
+                                    <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Time}"/>
+                                    <GridViewColumn Header="User" DisplayMemberBinding="{Binding NowUser}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
                     </ScrollViewer>
-                    <ComboBox Name="BookSelector" DisplayMemberPath="Name" SelectedValuePath="Act" />
                 </DockPanel>
             </TabItem>
         </TabControl>
