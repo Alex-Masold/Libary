@@ -6,6 +6,11 @@ namespace Lidary.Model
 {
     class User
     {
+        public int Id {  get; set; }
+        public string? Name { get; set; }
+        public string? Family { get; set; }
+        public List<Book> Books { get; set; }
+
         public User(int id, string? name, string? fаmily)
         {
             this.Id = id;
@@ -13,20 +18,18 @@ namespace Lidary.Model
             this.Family = fаmily;
             this.Books = new List<Book>();
         }
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Family { get; set; }
-        public List<Book> Books { get; set; }
 
-
-        public void BorrowBook(Book book, User NowUser)
+        
+        public void BorrowBook(Book book, User user)
         {
             if (book.Count > 0)
             {
-                Books.Add(book);
+                var addedBook = (Book)book.Clone();
+                addedBook.NowUser = user.Name;
+                addedBook.Time = DateTime.Now.ToString("t");
+                Books.Add(addedBook);
                 book.Count--;
-                book.Time = DateTime.Now.ToString("t");
-                book.NowUser = NowUser.Name;
+                
             }
             else
             {

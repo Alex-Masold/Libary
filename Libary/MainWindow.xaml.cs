@@ -27,7 +27,7 @@ namespace Libary
 
         List<Book> books = new List<Book>()
             {
-                new Book(1, "Все о чмокололадках","Никита Честных", 2020, 1, 27, 5),
+                new Book(1, "Все о чмоколадках","Никита Честных", 2020, 1, 27, 5),
                 new Book(2, "Все о дед инсайдах", "Андрей Науменко",  2023, 3, 10, 10),
                 new Book(3, "Все о yipppe", "?Александр Сидоров?", 2022, 2, 1, 1)
             };
@@ -61,8 +61,11 @@ namespace Libary
             if (selectedUser != null && selectedBook != null)
             {
                 selectedUser.BorrowBook(selectedBook, selectedUser);
-                UpdateBookUserList();
-                UpdateBookList();
+                //UpdateBookUserList();
+                BookList.Items.Refresh();
+                BookUserList.Items.Refresh();
+
+
             }
             else
             {
@@ -118,7 +121,7 @@ namespace Libary
             else
             {
                  var SerchUser = from u in users
-                                 where u.Name.ToLower().StartsWith(SerchBox.Text)
+                                 where u.Name.ToLower().StartsWith(SerchBox.Text) || u.Name.ToUpper().StartsWith(SerchBox.Text)
                                  orderby u
                                  select u;
 
@@ -133,6 +136,43 @@ namespace Libary
 
             BookUserList.ItemsSource = value.Books;
             BookUserList.Items.Refresh();
+        }
+
+        private void SerchUser(object sender, TextChangedEventArgs e)
+        {
+            if (SerchUsers.Text == "")
+            {
+                SelectUser.ItemsSource = users;
+                SelectUser.Items.Refresh();
+            }
+            else
+            {
+                var SerchUser = from u in users
+                                where u.Name.ToLower().StartsWith(SerchUsers.Text) || u.Name.ToUpper().StartsWith(SerchUsers.Text)
+                                orderby u
+                                select u;
+
+                SelectUser.ItemsSource = SerchUser;
+                SelectUser.Items.Refresh();
+            }
+        }
+
+        private void SerchBook(object sender, TextChangedEventArgs e)
+        {
+            if (SerchBooks.Text == "")
+            {
+                SelectBook.ItemsSource = books;
+                SelectBook.Items.Refresh();
+            }
+            else
+            {
+                var SerchBook = from u in books
+                                    where u.Name.ToLower().Contains(SerchBooks.Text) || u.Name.ToUpper().Contains(SerchBooks.Text)
+                                    orderby u
+                                    select u;
+                SelectBook.ItemsSource = SerchBook;
+                SelectBook.Items.Refresh();
+            }
         }
     }
 }
