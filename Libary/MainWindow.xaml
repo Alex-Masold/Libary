@@ -171,6 +171,24 @@
                     </DockPanel>
                 </DockPanel>
             </TabItem>
+            <TabItem>
+                <DockPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ListView Name="Journal">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Act" DisplayMemberBinding="{Binding Act}"/>
+                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Author}"/>
+                                    <GridViewColumn Header="Age" DisplayMemberBinding="{Binding age}"/>
+                                    <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Time}"/>
+                                    <GridViewColumn Header="User" DisplayMemberBinding="{Binding NowUser}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </DockPanel>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

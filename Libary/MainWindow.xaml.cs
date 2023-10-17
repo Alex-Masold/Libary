@@ -61,7 +61,7 @@ namespace Libary
             if (selectedUser != null && selectedBook != null)
             {
                 selectedUser.BorrowBook(selectedBook, selectedUser);
-                //UpdateBookUserList();
+                UpdateJournal();
                 BookList.Items.Refresh();
                 BookUserList.Items.Refresh();
 
@@ -72,18 +72,16 @@ namespace Libary
                 MessageBox.Show("Выберите пользователя и книгу");
             }
         }
-        private void UpdateBookList()
-        {
-            BookList.Items.Refresh();
-        }
-        private void UpdateBookUserList()
+        
+        // На это у меня есть планны так, что отсавлю пока это здесь
+        private void UpdateJournal()
         {
             List<Book> allBooks = new List<Book>();
             foreach (var user in (UserList.ItemsSource as List<User>)!)
             {
                 allBooks.AddRange(user.Books);
             }
-            BookUserList.ItemsSource = allBooks;
+            Journal.ItemsSource = allBooks;
         }
 
 
