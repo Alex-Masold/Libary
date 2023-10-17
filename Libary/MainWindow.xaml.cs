@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Lidary.Model;
 
 
@@ -41,12 +42,8 @@ namespace Libary
 
             BookList.ItemsSource = books;
 
-            SelectBook.ItemsSource = BookList.ItemsSource = books;
-            SelectUser.ItemsSource = UserList.ItemsSource = users;
-
-
-            SelectBook.ItemsSource = BookList.ItemsSource = books;
-            SelectUser.ItemsSource = UserList.ItemsSource = users;
+            SelectBook.ItemsSource = books;
+            SelectUser.ItemsSource = users;
 
         }
         private void AddSelectedBook(object sender, RoutedEventArgs e)
@@ -63,9 +60,7 @@ namespace Libary
                 selectedUser.BorrowBook(selectedBook, selectedUser);
                 UpdateJournal();
                 BookList.Items.Refresh();
-                BookUserList.Items.Refresh();
-
-
+                Mini_Journal.Items.Refresh();
             }
             else
             {
@@ -87,18 +82,47 @@ namespace Libary
 
         private void AddUser(object sender, RoutedEventArgs e)
         {
-            User value = new User(users[^1].Id, TextName.Text, TextFamily.Text);
-            value.Id++;
-            users.Add(value);
-            UserList.Items.Refresh();
+            if (TextName.Text != "" || TextFamily.Text != "")
+            { 
+                User value = new User(users[^1].Id, TextName.Text, TextFamily.Text);
+                value.Id++;
+                users.Add(value);
+                UserList.Items.Refresh();
+                SelectUser.Items.Refresh();
+            }
+            else
+            {
+                MessageBox.Show("Заполните поля");
+            }
         }
 
         private void AddBook(object sender, RoutedEventArgs e)
         {
-            Book value = new Book(books[^1].Act, TextBookName.Text, TextAuthor.Text, Convert.ToInt32(TextYear.Text), Convert.ToInt32(TextMounth.Text), Convert.ToInt32(TextDay.Text), Convert.ToInt32(TextCount.Text));
-            value.Act++;
-            books.Add(value);
-            BookList.Items.Refresh();
+            try
+            {
+
+                int Year = Convert.ToInt32(TextYear.Text);
+                int Mounth = Convert.ToInt32(TextMounth.Text);
+                int Day = Convert.ToInt32(TextDay.Text);
+                int Count = Convert.ToInt32(TextCount.Text);
+                Book value =
+                    new Book(books[^1].Act,
+                    TextBookName.Text,
+                    TextAuthor.Text,
+                    Year,
+                    Mounth,
+                    Day,
+                    Count);
+
+                value.Act++;
+                books.Add(value);
+                BookList.Items.Refresh();
+                SelectBook.Items.Refresh();
+            }
+            catch
+            {
+                MessageBox.Show("Введите в поля года, месяца, дней и колличество книг числа");
+            }
         }
 
         private void Select_User(object sender, SelectionChangedEventArgs e)
@@ -132,8 +156,8 @@ namespace Libary
         {
             User? value = SelectUser.SelectedItem as User;
 
-            BookUserList.ItemsSource = value.Books;
-            BookUserList.Items.Refresh();
+            Mini_Journal.ItemsSource = value.Books;
+            Mini_Journal.Items.Refresh();
         }
 
         private void SerchUser(object sender, TextChangedEventArgs e)

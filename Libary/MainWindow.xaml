@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Libary"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="800">
+        Title="MainWindow" Height="400" Width="1100" MinWidth="1100" MinHeight="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -23,18 +23,18 @@
                     <DockPanel DockPanel.Dock="Top">
                         <StackPanel>
                             <TextBlock>Поиск пользователей</TextBlock>
-                            <TextBox Name="SerchBox" TextChanged="Serch_in_Users"/>
+                            <TextBox Name="SerchBox" TextChanged="Serch_in_Users" MaxLength="10"/>
                         </StackPanel>
                     </DockPanel>                    
                     <Expander DockPanel.Dock="Bottom" Header="Добавить Пользователя" Grid.ColumnSpan="2">
                         <StackPanel VerticalAlignment="Bottom">
                             <DockPanel>
                                 <Label Content="Введите имя пользователя" Width="200"/>
-                                <TextBox Name="TextName"/>
+                                <TextBox Name="TextName" MaxLength="20"/>
                             </DockPanel>
                             <DockPanel>
                                 <Label Content="Введите Фамилию пользователя" Width="200"/>
-                                <TextBox Name="TextFamily"/>
+                                <TextBox Name="TextFamily" MaxLength="20"/>
                             </DockPanel>
                             <Button Content="Добавить Пользователя" Click="AddUser"/>
                         </StackPanel>
@@ -67,16 +67,16 @@
             </TabItem>
             <TabItem Header="Books" Height="20" VerticalAlignment="Top">
                 <DockPanel LastChildFill="True" Margin="10, 10, 10, 10">
-                    <TextBlock DockPanel.Dock="Top">Книги</TextBlock>
+                    <TextBlock DockPanel.Dock="Top" Margin="0,0,0,5">Книги</TextBlock>
                     <Expander DockPanel.Dock="Bottom" Header="Добавить Книгу" Grid.ColumnSpan="3">
                         <StackPanel VerticalAlignment="Bottom">
                             <DockPanel>
                                 <Label Content="Введите Название книги" Width="187"/>
-                                <TextBox Name="TextBookName"/>
+                                <TextBox Name="TextBookName" MaxLength="20"/>
                             </DockPanel>
                             <DockPanel>
                                 <Label Content="Введите Автора" Width="187"/>
-                                <TextBox Name="TextAuthor"/>
+                                <TextBox Name="TextAuthor" MaxLength="30"/>
                             </DockPanel>
                             <DockPanel>
                                 <Label Content="Год" Width="187"/>
@@ -113,13 +113,13 @@
 
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Выданные книги">
+            <TabItem Header="Extradition">
                 <DockPanel LastChildFill="True" Margin="10, 10, 10, 10">
-                    <TextBlock DockPanel.Dock="Top">Выданные книги</TextBlock>
+                    <TextBlock DockPanel.Dock="Top">Выдача книг</TextBlock>
                     <Button DockPanel.Dock="Bottom" Content="Выдать книгу" Click="AddSelectedBook"/>
 
                     <DockPanel DockPanel.Dock="Left" Margin="5,5,5,5">
-                        <TextBox x:Name="SerchUsers" DockPanel.Dock="Top" Margin="0,0,0,5" UndoLimit="10" TextChanged="SerchUser"/>
+                        <TextBox x:Name="SerchUsers" DockPanel.Dock="Top" Margin="0,0,0,5" MaxLength="10" TextChanged="SerchUser"/>
 
                         <ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto">
                             <ListView Name="SelectUser" SelectionChanged="SelectUser_SelectionChanged">
@@ -136,7 +136,7 @@
                     </DockPanel>
                     
                     <DockPanel DockPanel.Dock="Right" Margin="5,5,5,5">
-                        <TextBox x:Name="SerchBooks" DockPanel.Dock="Top" Margin="0,0,0,5" UndoLimit="10" TextChanged="SerchBook"/>
+                        <TextBox x:Name="SerchBooks" DockPanel.Dock="Top" Margin="0,0,0,5" MaxLength="20" TextChanged="SerchBook"/>
                         <ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto">
                         <ListView Name="SelectBook">
                             <ListView.View>
@@ -155,7 +155,7 @@
                     <DockPanel Margin="5,5,5,5">
 
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <ListView Name="BookUserList">
+                            <ListView Name="Mini_Journal" MinWidth="6">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Act" DisplayMemberBinding="{Binding Act}"/>
@@ -171,8 +171,9 @@
                     </DockPanel>
                 </DockPanel>
             </TabItem>
-            <TabItem>
-                <DockPanel>
+
+            <TabItem Header="Journal">
+                <DockPanel Margin="5,5,5,5">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <ListView Name="Journal">
                             <ListView.View>
