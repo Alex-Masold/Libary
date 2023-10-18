@@ -41,24 +41,12 @@
                     </Expander>
 
                     <ScrollViewer>
-                        <ListView Name="UserList" SelectionChanged="Select_User">
+                        <ListView Name="UserList">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="id" DisplayMemberBinding="{Binding Path=Id}"/>
                                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
                                     <GridViewColumn Header="Family" DisplayMemberBinding="{Binding Path=Family}"/>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </ScrollViewer>
-                    <ScrollViewer>
-                        <ListView Name="UserBook" MinWidth="400">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Atc" DisplayMemberBinding="{Binding Path=Act}"/>
-                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
-                                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Path=Author}"/>
-                                    <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Path=Time}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

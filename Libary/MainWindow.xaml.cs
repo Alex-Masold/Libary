@@ -125,13 +125,6 @@ namespace Libary
             }
         }
 
-        private void Select_User(object sender, SelectionChangedEventArgs e)
-        {
-            User? value = UserList.SelectedItem as User;
-
-            UserBook.ItemsSource = value.Books;
-            UserBook.Items.Refresh();
-        }
 
         private void Serch_in_Users(object sender, TextChangedEventArgs e)
         {
@@ -154,9 +147,9 @@ namespace Libary
 
         private void SelectUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            User? value = SelectUser.SelectedItem as User;
+            User selectedUser = (User)SelectUser.SelectedItem;
 
-            Mini_Journal.ItemsSource = value.Books;
+            Mini_Journal.ItemsSource = selectedUser.Books;
             Mini_Journal.Items.Refresh();
         }
 
