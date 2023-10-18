@@ -147,9 +147,10 @@ namespace Libary
 
         private void SelectUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            User selectedUser = (User)SelectUser.SelectedItem;
+            User? value = SelectUser.SelectedItem as User;
 
-            Mini_Journal.ItemsSource = selectedUser.Books;
+            Mini_Journal.ItemsSource = value.Books; // вызывается System.NullReferenceException: "Object reference not set to an instance of an object." когда выбираешь пользователя и начинаешь вводить что-либо в поиск
+
             Mini_Journal.Items.Refresh();
         }
 
