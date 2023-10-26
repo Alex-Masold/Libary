@@ -144,7 +144,6 @@ namespace Libary
                 UserList.Items.Refresh();
             }
         }
-
         private void SelectUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             User? value = SelectUser.SelectedItem as User;

@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace Libary_2.Model
 {
     public class Book : PropPropertyChanged
     {
+        private static short _uniqueId = 0;
 
-        private string id;
+        private int id = _uniqueId;
         private string name;
         private string author;
-        private string age;
-        private string count;
-        private string time;
-        private string nowUser;
-        public string Id
+        private int day;
+        private int month;
+        private int year;
+        private ObservableCollection<Example> examples;
+        
+        public int Id
         {
             get { return id; }
             set
@@ -44,32 +41,97 @@ namespace Libary_2.Model
                 OnPropertyChanged("Author");
             }
         }
+        public int Day
+        {
+            get { return day; }
+            set
+            {
+                day = value;
+                OnPropertyChanged("Day");
+                OnPropertyChanged("Age");
+            }
+        }
+        public int Month
+        {
+            get { return month; }
+            set
+            {
+                month = value;
+                OnPropertyChanged("Month");
+                OnPropertyChanged("Age");
+            }
+        }
+        public int Year
+        {
+            get { return year; }
+            set
+            {
+                year = value;
+                OnPropertyChanged("Year");
+                OnPropertyChanged("Age");
+            }
+        } 
         public string Age
         {
-            get { return author; }
+            get
+            {
+                return $"{day:D2}/{month:D2}/{year:D4}"; // Форматируем строку в виде "дд/мм/гггг"
+            }
             set
             {
-                author = value;
-                OnPropertyChanged("Author");
+                // Разбиваем строку на отдельные компоненты
+                string[] components = value.Split('/');
+                if (components.Length == 3 &&
+                    int.TryParse(components[0], out int parsedDay) &&
+                    int.TryParse(components[1], out int parsedMonth) &&
+                    int.TryParse(components[2], out int parsedYear))
+                {
+                    day = parsedDay;
+                    month = parsedMonth;
+                    year = parsedYear;
+                    OnPropertyChanged("Age");
+                }
+                else
+                {
+                    // Обработка ошибки ввода, если формат строки неверен
+                    // Можно добавить логику по обработке ошибок ввода
+                }
             }
         }
-        public string Time
+        public int Count
         {
-            get { return author; }
+            get { return examples?.Count ?? 0; }
+        }
+        public ObservableCollection<Example> Examples
+        {
+            get { return examples; }
             set
             {
-                author = value;
-                OnPropertyChanged("Author");
+                if (examples != null)
+                {
+                    examples.CollectionChanged -= Examples_CollectionChanged;
+                }
+
+                examples = value;
+
+                if (examples != null)
+                {
+                    examples.CollectionChanged += Examples_CollectionChanged;
+                }
+
+                OnPropertyChanged("Examples");
+                OnPropertyChanged("Count");
             }
         }
-        public string Author
+        private void Examples_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            get { return author; }
-            set
-            {
-                author = value;
-                OnPropertyChanged("Author");
-            }
+            OnPropertyChanged("Count");
+        }
+        public Book()
+        {
+            _uniqueId++;
+            Id = _uniqueId;
+            Examples = new();
         }
     }
 }

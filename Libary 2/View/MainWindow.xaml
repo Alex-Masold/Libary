@@ -7,15 +7,30 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="425*"/>
+        </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TabControl>
-            <TabItem>
+        <TabControl Grid.RowSpan="2">
+            <TabItem Header="Users">
                 <DockPanel>
-                    <ScrollViewer DockPanel.Dock="Left">
-                        <ListView Name="UserList" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBox DockPanel.Dock="Top"
+                                 Text="{Binding SearchUserText, UpdateSourceTrigger=PropertyChanged}"/>
+                        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                            <Button x:Name="AddUser" DockPanel.Dock="Left" Command="{Binding AddUserCommand}">Добавить</Button>
+                            <Button x:Name="DeleteUser" DockPanel.Dock="Right" Command="{Binding DeleteUserCommand}">Удалить</Button>
+                        </StackPanel>
+
+                        <ListView Name="UserList" 
+                                  ItemsSource="{Binding FilteredUsers}" 
+                                  SelectedItem="{Binding SelectedUser}"
+                                  ScrollViewer.CanContentScroll="True" 
+                                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Family" DisplayMemberBinding="{Binding Path=Family}"/>
@@ -23,15 +38,175 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                    </ScrollViewer>
+
+                    </DockPanel>
+
                     <StackPanel DataContext="{Binding SelectedUser}">
                         <TextBlock Text="Выбранный пользовтель" />
                         <TextBlock Text="Имя" />
                         <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBlock Text="Фамилия" />
                         <TextBox Text="{Binding Family, UpdateSourceTrigger=PropertyChanged}" />
-                        <Button x:Name="Delete">Удалить</Button>
                     </StackPanel>
+                    
+                </DockPanel>
+            </TabItem>
+
+            <TabItem Header="Books">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBox DockPanel.Dock="Top"
+                                 Text="{Binding SearchBookText, UpdateSourceTrigger=PropertyChanged}"/>
+                        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                            <Button x:Name="AddBook" DockPanel.Dock="Left" Command="{Binding AddBookCommand}">Добавить</Button>
+                            <Button x:Name="DeleteBook" DockPanel.Dock="Right" Command="{Binding DeleteBookCommand}">Удалить</Button>
+                        </StackPanel>
+
+                        <ListView Name="BookList" 
+                                  ItemsSource="{Binding FilteredBooks}" 
+                                  SelectedItem="{Binding SelectedBook}"
+                                  ScrollViewer.CanContentScroll="True" 
+                                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}"/>
+                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Path=Author}"/>
+                                    <GridViewColumn Header="Age" DisplayMemberBinding="{Binding Age}"/>
+                                    <GridViewColumn Header="Count" DisplayMemberBinding="{Binding Count}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </DockPanel>
+
+                    <TabControl>
+                        <TabItem Header="Change">
+                            <StackPanel DataContext="{Binding SelectedBook}">
+                                <TextBlock Text="Выбранная Книга" />
+                                <TextBlock Text="Id" />
+                                <TextBlock Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="Название" />
+                                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="Автор" />
+                                <TextBox Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="Дата поступления"/> 
+                                <TextBlock Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Expander>
+                                    <StackPanel>
+                                        <TextBlock Text="День"/>
+                                        <TextBox x:Name="Day" Text="{Binding Day, UpdateSourceTrigger=PropertyChanged}" MaxLength="2"/>
+                                        <TextBlock Text="Месяц" />
+                                        <TextBox x:Name="Month" Text="{Binding Month, UpdateSourceTrigger=PropertyChanged}" MaxLength="2"/>
+                                        <TextBlock Text="Год" />
+                                        <TextBox x:Name="Year" Text="{Binding Year, UpdateSourceTrigger=PropertyChanged}" MaxLength="4"/>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </TabItem>
+                        
+                        <TabItem Header="Example">
+                            <DockPanel>
+                                <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                                    <Button x:Name="AddExample" DockPanel.Dock="Left" Command="{Binding AddExampleCommand}">Добавить</Button>
+                                </StackPanel>
+                                <ListView Name="BookExample"
+                                          ItemsSource="{Binding SelectedBook.Examples}"
+                                          ScrollViewer.CanContentScroll="True" 
+                                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Arc" DisplayMemberBinding="{Binding Path=Arc}"/>
+                                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                                            <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Path=Author}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </DockPanel>
+                            
+                        </TabItem>
+                    </TabControl>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Extradition">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBox DockPanel.Dock="Top"
+                                 Text="{Binding SearchUserText, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <ListView DockPanel.Dock="Bottom"
+                              Name="UserListExtradition"
+                              ItemsSource="{Binding FilteredUsers}" 
+                              SelectedItem="{Binding SelectedUser}"
+                              ScrollViewer.CanContentScroll="True" 
+                              ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Family" DisplayMemberBinding="{Binding Path=Family}"/>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+                    <DockPanel DockPanel.Dock="Right">
+                        <TextBox DockPanel.Dock="Top"
+                                 Text="{Binding SearchBookText, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                        <ListView DockPanel.Dock="Right"
+                                  Name="BookListExtradition" 
+                                  ItemsSource="{Binding FilteredBooks}" 
+                                  SelectedItem="{Binding SelectedBook}"
+                                  ScrollViewer.CanContentScroll="True" 
+                                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}"/>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Path=Author}"/>
+                                </GridView>
+                        </ListView.View>
+                    </ListView>
+                    </DockPanel>
+                    
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                            <Button x:Name="ExtraditeBook" Command="{Binding ExtraditeBookCommand}">Выдать книгу</Button>
+                            <Button x:Name="ReturnBook" Command="{Binding ReturnBookCommand}">Вернуть книгу</Button>
+                        </StackPanel>
+                        <ListView Name="BookExampleExtradition"
+                                          ItemsSource="{Binding SelectedUser.Examples}"
+                                          ScrollViewer.CanContentScroll="True" 
+                                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Arc" DisplayMemberBinding="{Binding Path=Arc}"/>
+                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Path=Author}"/>
+                                    <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Path=Time}"/>
+                                    <GridViewColumn Header="User" DisplayMemberBinding="{Binding Path=NowUser}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </DockPanel>
+                </DockPanel>
+                
+            </TabItem>
+            <TabItem Header="Journal">
+                <DockPanel>
+                    <ListView Name="Journal"
+                            ItemsSource="{Binding Journal}"
+                            ScrollViewer.CanContentScroll="True" 
+                            ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Arc" DisplayMemberBinding="{Binding Path=Arc}"/>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                                <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Path=Author}"/>
+                                <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Path=Time}"/>
+                                <GridViewColumn Header="User" DisplayMemberBinding="{Binding Path=NowUser}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                 </DockPanel>
             </TabItem>
         </TabControl>
