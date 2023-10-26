@@ -12,11 +12,16 @@ namespace Libary_2.ViewModel
     {
         private User selectedUser;
         private Book selectedBook;
+
         private string searchUserText;
         private string searchBookText;
+        private string searchUserTextExtradition;
+        private string searchBookTextExtradition;
 
         private ObservableCollection<User> filteredUsers;
         private ObservableCollection<Book> filteredBooks;
+        private ObservableCollection<User> filteredUsersExtradition;
+        private ObservableCollection<Book> filteredBooksExtradition;
 
         public ObservableCollection<User> Users { get; set; }
         public ObservableCollection<Book> Books { get; set; }
@@ -38,6 +43,24 @@ namespace Libary_2.ViewModel
             {
                 filteredBooks = value;
                 OnPropertyChanged(nameof(FilteredBooks));
+            }
+        }
+        public ObservableCollection<User> FilteredUsersExtradition
+        {
+            get { return filteredUsersExtradition; }
+            set
+            {
+                filteredUsersExtradition = value;
+                OnPropertyChanged(nameof(FilteredUsersExtradition));
+            }
+        }
+        public ObservableCollection<Book> FilteredBooksExtradition
+        {
+            get { return filteredBooksExtradition; }
+            set
+            {
+                filteredBooksExtradition = value;
+                OnPropertyChanged(nameof(FilteredBooksExtradition));
             }
         }
 
@@ -170,6 +193,7 @@ namespace Libary_2.ViewModel
                     OnPropertyChanged("SelectedBook");
                 }
             }
+
         public string SearchUserText
         {
             get { return searchUserText; }
@@ -190,6 +214,26 @@ namespace Libary_2.ViewModel
                 SearchBook();
             }
         }
+        public string SearchUserTextExtradition
+        {
+            get { return searchUserTextExtradition; }
+            set
+            {
+                searchUserTextExtradition = value;
+                OnPropertyChanged(nameof(SearchUserTextExtradition));
+                SearchUserExtradition();
+            }
+        }
+        public string SearchBookTextExtradition
+        {
+            get { return searchBookTextExtradition; }
+            set
+            {
+                searchBookTextExtradition = value;
+                OnPropertyChanged(nameof(SearchBookTextExtradition));
+                SearchBookExtradition();
+            }
+        }
 
         public ApplicationViewModel()
         {
@@ -201,6 +245,8 @@ namespace Libary_2.ViewModel
 
             FilteredUsers = Users;
             FilteredBooks = Books;
+            filteredUsersExtradition = Users;
+            filteredBooksExtradition = Books;
 
             SelectedBook = Books.First();
             SelectedUser = Users.First();
@@ -214,12 +260,13 @@ namespace Libary_2.ViewModel
             else
             {
                 FilteredUsers = new ObservableCollection<User>(
-                    Users.Where
-                    (
-                        user => 
-                        user.Name.Contains(SearchUserText, StringComparison.OrdinalIgnoreCase) ||
-                        user.Family.Contains(SearchUserText, StringComparison.OrdinalIgnoreCase))
-                    );
+                    from user in Users
+                                where
+                                user.Name.Contains(SearchUserText, StringComparison.OrdinalIgnoreCase) ||
+                                user.Family.Contains(SearchUserText, StringComparison.OrdinalIgnoreCase)
+                                orderby user.Name
+                                select user
+                );
             }
         }
         private void SearchBook()
@@ -231,11 +278,48 @@ namespace Libary_2.ViewModel
             else
             {
                 FilteredBooks = new ObservableCollection<Book>(
-                    Books.Where
-                    (
-                        book =>
-                        book.Name.Contains(SearchBookText, StringComparison.OrdinalIgnoreCase) ||
-                        book.Author.Contains(SearchBookText, StringComparison.OrdinalIgnoreCase))
+                    from book in Books
+                    where
+                    book.Name.Contains(SearchBookText, StringComparison.OrdinalIgnoreCase) ||
+                    book.Author.Contains(SearchBookText, StringComparison.OrdinalIgnoreCase)
+                    orderby book.Author
+                    select book
+                    );
+            }
+        }
+        private void SearchUserExtradition()
+        {
+            if (string.IsNullOrEmpty(searchUserTextExtradition))
+            {
+                FilteredUsersExtradition = Users;
+            }
+            else
+            {
+                FilteredUsersExtradition = new ObservableCollection<User>(
+                    from user in Users
+                    where
+                    user.Name.Contains(SearchUserTextExtradition, StringComparison.OrdinalIgnoreCase) ||
+                    user.Family.Contains(SearchUserTextExtradition, StringComparison.OrdinalIgnoreCase)
+                    orderby user.Name
+                    select user
+                    );
+            }
+        }
+        private void SearchBookExtradition()
+        {
+            if (string.IsNullOrEmpty(searchBookTextExtradition))
+            {
+                FilteredBooksExtradition = Books;
+            }
+            else
+            {
+                FilteredBooksExtradition = new ObservableCollection<Book>(
+                    from book in Books
+                    where
+                    book.Name.Contains(SearchBookTextExtradition, StringComparison.OrdinalIgnoreCase) ||
+                    book.Author.Contains(SearchBookTextExtradition, StringComparison.OrdinalIgnoreCase)
+                    orderby book.Author
+                    select book
                     );
             }
         }

@@ -131,11 +131,11 @@
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Left">
                         <TextBox DockPanel.Dock="Top"
-                                 Text="{Binding SearchUserText, UpdateSourceTrigger=PropertyChanged}"/>
+                                 Text="{Binding SearchUserTextExtradition, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <ListView DockPanel.Dock="Bottom"
                               Name="UserListExtradition"
-                              ItemsSource="{Binding FilteredUsers}" 
+                              ItemsSource="{Binding FilteredUsersExtradition}" 
                               SelectedItem="{Binding SelectedUser}"
                               ScrollViewer.CanContentScroll="True" 
                               ScrollViewer.VerticalScrollBarVisibility="Hidden">
@@ -149,12 +149,12 @@
                 </DockPanel>
                     <DockPanel DockPanel.Dock="Right">
                         <TextBox DockPanel.Dock="Top"
-                                 Text="{Binding SearchBookText, UpdateSourceTrigger=PropertyChanged}"/>
+                                 Text="{Binding SearchBookTextExtradition, UpdateSourceTrigger=PropertyChanged}"/>
 
 
                         <ListView DockPanel.Dock="Right"
                                   Name="BookListExtradition" 
-                                  ItemsSource="{Binding FilteredBooks}" 
+                                  ItemsSource="{Binding FilteredBooksExtradition}" 
                                   SelectedItem="{Binding SelectedBook}"
                                   ScrollViewer.CanContentScroll="True" 
                                   ScrollViewer.VerticalScrollBarVisibility="Hidden">
