@@ -5,23 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Libary_2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="850" MinWidth="850" MinHeight="450">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="425*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TabControl Grid.RowSpan="2">
+        <TabControl Grid.RowSpan="2" Margin="2,0,2,0">
             <TabItem Header="Users">
                 <DockPanel>
-                    <DockPanel DockPanel.Dock="Left">
+                    <DockPanel DockPanel.Dock="Left" Margin="5,5,5,5">
                         <TextBox DockPanel.Dock="Top"
-                                 Text="{Binding SearchUserText, UpdateSourceTrigger=PropertyChanged}"/>
-                        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                                 Text="{Binding SearchUserText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,5"/>
+                        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="0,5,0,0">
                             <Button x:Name="AddUser" DockPanel.Dock="Left" Command="{Binding AddUserCommand}">Добавить</Button>
                             <Button x:Name="DeleteUser" DockPanel.Dock="Right" Command="{Binding DeleteUserCommand}">Удалить</Button>
                         </StackPanel>
@@ -41,12 +41,12 @@
 
                     </DockPanel>
 
-                    <StackPanel DataContext="{Binding SelectedUser}">
-                        <TextBlock Text="Выбранный пользовтель" />
-                        <TextBlock Text="Имя" />
-                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBlock Text="Фамилия" />
-                        <TextBox Text="{Binding Family, UpdateSourceTrigger=PropertyChanged}" />
+                    <StackPanel DataContext="{Binding SelectedUser}" Margin="0,5,0,5">
+                        <TextBlock Text="Выбранный пользовтель" Margin="5,0,0,0" />
+                        <TextBlock Text="Имя" Margin="5,0,0,0" />
+                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,0,5" />
+                        <TextBlock Text="Фамилия" Margin="5,0,0,0" />
+                        <TextBox Text="{Binding Family, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,0,0" />
                     </StackPanel>
                     
                 </DockPanel>
@@ -54,10 +54,10 @@
 
             <TabItem Header="Books">
                 <DockPanel>
-                    <DockPanel DockPanel.Dock="Left">
+                    <DockPanel DockPanel.Dock="Left" Margin="5,5,5,5" LastChildFill="False">
                         <TextBox DockPanel.Dock="Top"
-                                 Text="{Binding SearchBookText, UpdateSourceTrigger=PropertyChanged}"/>
-                        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                                 Text="{Binding SearchBookText, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,5"/>
+                        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5,5,5,0">
                             <Button x:Name="AddBook" DockPanel.Dock="Left" Command="{Binding AddBookCommand}">Добавить</Button>
                             <Button x:Name="DeleteBook" DockPanel.Dock="Right" Command="{Binding DeleteBookCommand}">Удалить</Button>
                         </StackPanel>
@@ -66,7 +66,7 @@
                                   ItemsSource="{Binding FilteredBooks}" 
                                   SelectedItem="{Binding SelectedBook}"
                                   ScrollViewer.CanContentScroll="True" 
-                                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                  ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="5,0,4,0">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}"/>
@@ -82,23 +82,23 @@
                     <TabControl>
                         <TabItem Header="Change">
                             <StackPanel DataContext="{Binding SelectedBook}">
-                                <TextBlock Text="Выбранная Книга" />
-                                <TextBlock Text="Id" />
-                                <TextBlock Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBlock Text="Название" />
-                                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBlock Text="Автор" />
-                                <TextBox Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBlock Text="Дата поступления"/> 
-                                <TextBlock Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="Выбранная Книга" Margin="5,5,5,5" />
+                                <TextBlock Text="Id" Margin="5,0,5,0" />
+                                <TextBlock Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,5"/>
+                                <TextBlock Text="Название" Margin="5,0,5,0" />
+                                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,5"/>
+                                <TextBlock Text="Автор" Margin="5,0,5,0" />
+                                <TextBox Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,5"/>
+                                <TextBlock Text="Дата поступления" Margin="5,0,0,0"/> 
+                                <TextBlock Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,5"/>
                                 <Expander>
                                     <StackPanel>
-                                        <TextBlock Text="День"/>
-                                        <TextBox x:Name="Day" Text="{Binding Day, UpdateSourceTrigger=PropertyChanged}" MaxLength="2"/>
-                                        <TextBlock Text="Месяц" />
-                                        <TextBox x:Name="Month" Text="{Binding Month, UpdateSourceTrigger=PropertyChanged}" MaxLength="2"/>
-                                        <TextBlock Text="Год" />
-                                        <TextBox x:Name="Year" Text="{Binding Year, UpdateSourceTrigger=PropertyChanged}" MaxLength="4"/>
+                                        <TextBlock Text="День" Margin="5,5,5,0"/>
+                                        <TextBox x:Name="Day" Text="{Binding Day, UpdateSourceTrigger=PropertyChanged}" MaxLength="2" Margin="5,5,5,5"/>
+                                        <TextBlock Text="Месяц" Margin="5,0,5,0" />
+                                        <TextBox x:Name="Month" Text="{Binding Month, UpdateSourceTrigger=PropertyChanged}" MaxLength="2" Margin="5,5,5,5"/>
+                                        <TextBlock Text="Год" Margin="5,0,5,0" />
+                                        <TextBox x:Name="Year" Text="{Binding Year, UpdateSourceTrigger=PropertyChanged}" MaxLength="4" Margin="5,5,5,0"/>
                                     </StackPanel>
                                 </Expander>
                             </StackPanel>
@@ -107,7 +107,7 @@
                         <TabItem Header="Example">
                             <DockPanel>
                                 <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
-                                    <Button x:Name="AddExample" DockPanel.Dock="Left" Command="{Binding AddExampleCommand}">Добавить</Button>
+                                    <Button x:Name="AddExample" DockPanel.Dock="Left" Command="{Binding AddExampleCommand}" Margin="0,0,0,5">Добавить</Button>
                                 </StackPanel>
                                 <ListView Name="BookExample"
                                           ItemsSource="{Binding SelectedBook.Examples}"
@@ -129,9 +129,9 @@
             </TabItem>
             <TabItem Header="Extradition">
                 <DockPanel>
-                    <DockPanel DockPanel.Dock="Left">
+                    <DockPanel DockPanel.Dock="Left" Margin="5,5,5,5">
                         <TextBox DockPanel.Dock="Top"
-                                 Text="{Binding SearchUserTextExtradition, UpdateSourceTrigger=PropertyChanged}"/>
+                                 Text="{Binding SearchUserTextExtradition, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,5"/>
 
                         <ListView DockPanel.Dock="Bottom"
                               Name="UserListExtradition"
@@ -149,7 +149,7 @@
                 </DockPanel>
                     <DockPanel DockPanel.Dock="Right">
                         <TextBox DockPanel.Dock="Top"
-                                 Text="{Binding SearchBookTextExtradition, UpdateSourceTrigger=PropertyChanged}"/>
+                                 Text="{Binding SearchBookTextExtradition, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,0"/>
 
 
                         <ListView DockPanel.Dock="Right"
@@ -157,26 +157,27 @@
                                   ItemsSource="{Binding FilteredBooksExtradition}" 
                                   SelectedItem="{Binding SelectedBook}"
                                   ScrollViewer.CanContentScroll="True" 
-                                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                  ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="5,5,5,5" Width="200">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}"/>
                                 <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
-                                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Path=Author}"/>
+                                <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Path=Author}"/>
+                                <GridViewColumn Header="Count" DisplayMemberBinding="{Binding Count}"/>
                                 </GridView>
                         </ListView.View>
                     </ListView>
                     </DockPanel>
                     
                     <DockPanel>
-                        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="0,0,0,5">
                             <Button x:Name="ExtraditeBook" Command="{Binding ExtraditeBookCommand}">Выдать книгу</Button>
                             <Button x:Name="ReturnBook" Command="{Binding ReturnBookCommand}">Вернуть книгу</Button>
                         </StackPanel>
                         <ListView Name="BookExampleExtradition"
                                           ItemsSource="{Binding SelectedUser.Examples}"
                                           ScrollViewer.CanContentScroll="True" 
-                                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                          ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="0,5,0,0">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Arc" DisplayMemberBinding="{Binding Path=Arc}"/>

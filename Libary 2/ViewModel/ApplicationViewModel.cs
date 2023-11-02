@@ -153,7 +153,10 @@ namespace Libary_2.ViewModel
                             Book book = SelectedBook;
                             User user = SelectedUser;
                             user.BorrowBook(book);
-                            Journal.Add(user.Examples.Last());
+                            if (book.Count > 0)
+                            { 
+                                Journal.Add(user.Examples.Last());
+                            }
                         }
                     }));
             }

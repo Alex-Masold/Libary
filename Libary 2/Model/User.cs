@@ -76,17 +76,24 @@ namespace Lidary_2.Model
             }
             else
             {
-                MessageBox.Show("книга кончилась");
+                MessageBox.Show("книга кончилась, или отсутстувует");
             }
         }
         public void ReturnBook(Book book)
         {
             if (this.Count > 0)
             {
-                book.Examples.Add(this.Examples.First());
-                book.Examples.Last().NowUser = null;
-                book.Examples.Last().Time = null;
-                this.Examples.Remove(this.Examples.First());
+                if (book != null)
+                {
+                    book.Examples.Add(this.Examples.First());
+                    book.Examples.Last().NowUser = null;
+                    book.Examples.Last().Time = null;
+                    this.Examples.Remove(this.Examples.First());
+                }
+                else
+                {
+                    MessageBox.Show("Выберете выданную книгу, если выданных книг, то выдайте");
+                }
             }
         }
     }
